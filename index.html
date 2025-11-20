@@ -4,73 +4,358 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>kukiat  keakool</title>
-    <link rel="stylesheet" href="style.css" />
-   
+    <title>kukiat keakool - Responsive 3D</title>
+    
+    <style>
+      /* --- 1. การตั้งค่าพื้นฐาน (Reset) --- */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: sans-serif;
+      }
+
+      body {
+        min-height: 100vh;
+        background-image: url('images/IMG_6982~photo.JPG'); /* ตรวจสอบ path รูปพื้นหลัง */
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed; /* ให้พื้นหลังนิ่งเวลาเลื่อน */
+        overflow-x: hidden; /* ป้องกัน scroll แนวนอนเกิน */
+      }
+
+      /* --- 2. Header & Navbar --- */
+      header {
+        position: fixed; /* เปลี่ยนเป็น fixed เพื่อให้เมนูตามลงมา */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 80px;
+        background: #43a5f6;
+        padding: 0 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      }
+
+      header .logo img {
+        height: 60px;
+        width: auto;
+      }
+
+      header nav ul {
+        display: flex;
+        list-style: none;
+      }
+
+      header nav ul li {
+        position: relative;
+      }
+
+      header nav ul li a {
+        color: #fff;
+        font-size: 1.1em;
+        padding: 10px 20px;
+        text-decoration: none;
+        display: block;
+        transition: 0.3s;
+      }
+
+      header nav ul li a:hover {
+        background: #2b93e3;
+        border-radius: 5px;
+      }
+
+      /* Dropdown Menu */
+      header nav ul li ul {
+        position: absolute;
+        top: 100%; /* ให้ dropdown อยู่ใต้เมนูพอดี */
+        left: 0;
+        width: 200px;
+        background: #445964;
+        display: none;
+        flex-direction: column;
+      }
+
+      header nav ul li:hover > ul {
+        display: block;
+      }
+
+      header nav ul li ul li ul {
+        top: 0;
+        left: 100%; /* Submenu ออกขวา */
+      }
+
+      header nav ul li ul li {
+        width: 100%;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+      }
+
+      /* Hamburger Menu Icon (Hidden on Desktop) */
+      .menuToggle {
+        display: none;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .menuToggle span {
+        width: 30px;
+        height: 3px;
+        background: #fff;
+        transition: 0.3s;
+      }
+
+      /* --- 3. 3D Carousel Logic (หัวใจหลัก) --- */
+      .container {
+        position: relative;
+        margin: 150px auto 0; /* เว้นระยะจาก Header */
+        width: 300px; /* ความกว้างมาตรฐานของ Container */
+        height: 200px;
+        perspective: 1000px; /* มุมมอง 3D */
+      }
+
+      .carousel {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        animation: rotate360 40s infinite linear; /* หมุนอัตโนมัติ */
+      }
+
+      /* หยุดหมุนเมื่อเอาเมาส์ชี้ (Optional) */
+      .container:hover .carousel {
+        animation-play-state: paused;
+      }
+
+      @keyframes rotate360 {
+        from { transform: rotateY(0deg); }
+        to { transform: rotateY(-360deg); }
+      }
+
+      .image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 300px;  /* ขนาดรูป Desktop */
+        height: 200px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        /* เส้นขอบเขียวเรืองแสงตามต้นฉบับ */
+        border: 2px solid #04fc43;
+        box-shadow: 0 0 15px #04fc43;
+      }
+
+      /* จัดการรูปภายในให้เต็มกรอบ */
+      .image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* ตัวเลขบอกลำดับ (ซ้อนทับรูป) */
+      .image span {
+        position: absolute;
+        font-size: 3rem;
+        color: rgba(255,255,255,0.8);
+        text-shadow: 0 0 5px #000;
+        z-index: 2;
+        pointer-events: none;
+      }
+
+      /* --- การคำนวณตำแหน่ง 3D (Desktop: Width 300px) --- */
+      /* สูตร: translateZ ≈ (width / 2) / tan(20deg) 
+         ถ้า width=300, translateZ ≈ 412px (ใช้ 430px เพื่อความห่างสวยงาม) */
+      
+      .image:nth-child(1) { transform: rotateY(0deg) translateZ(430px); }
+      .image:nth-child(2) { transform: rotateY(40deg) translateZ(430px); }
+      .image:nth-child(3) { transform: rotateY(80deg) translateZ(430px); }
+      .image:nth-child(4) { transform: rotateY(120deg) translateZ(430px); }
+      .image:nth-child(5) { transform: rotateY(160deg) translateZ(430px); }
+      .image:nth-child(6) { transform: rotateY(200deg) translateZ(430px); }
+      .image:nth-child(7) { transform: rotateY(240deg) translateZ(430px); }
+      .image:nth-child(8) { transform: rotateY(280deg) translateZ(430px); }
+      .image:nth-child(9) { transform: rotateY(320deg) translateZ(430px); }
+
+
+      /* --- 4. Responsive Design (ปรับตามขนาดหน้าจอ) --- */
+
+      /* TABLET (ต่ำกว่า 900px) */
+      @media (max-width: 900px) {
+        /* Navbar ปรับเป็น Hamburger */
+        .menuToggle {
+          display: flex;
+        }
+        header {
+          padding: 0 20px;
+        }
+        header nav {
+          position: absolute;
+          top: 80px;
+          left: -100%; /* ซ่อนไปทางซ้าย */
+          width: 100%;
+          background: #445964;
+          transition: 0.3s;
+        }
+        header.active nav {
+          left: 0; /* แสดงเมนู */
+        }
+        header nav ul {
+          flex-direction: column;
+          width: 100%;
+        }
+        header nav ul li {
+          width: 100%;
+          text-align: center;
+        }
+        header nav ul li ul {
+          position: relative;
+          width: 100%;
+          background: #37474f;
+        }
+        
+        /* ปรับ 3D Carousel (ลดขนาดเหลือ 220px) */
+        /* คำนวณใหม่: translateZ ≈ 320px */
+        .container {
+          width: 220px; 
+          height: 150px;
+          margin-top: 120px;
+        }
+        .image {
+          width: 220px;
+          height: 150px;
+        }
+        .image:nth-child(1) { transform: rotateY(0deg) translateZ(320px); }
+        .image:nth-child(2) { transform: rotateY(40deg) translateZ(320px); }
+        .image:nth-child(3) { transform: rotateY(80deg) translateZ(320px); }
+        .image:nth-child(4) { transform: rotateY(120deg) translateZ(320px); }
+        .image:nth-child(5) { transform: rotateY(160deg) translateZ(320px); }
+        .image:nth-child(6) { transform: rotateY(200deg) translateZ(320px); }
+        .image:nth-child(7) { transform: rotateY(240deg) translateZ(320px); }
+        .image:nth-child(8) { transform: rotateY(280deg) translateZ(320px); }
+        .image:nth-child(9) { transform: rotateY(320deg) translateZ(320px); }
+      }
+
+      /* MOBILE (ต่ำกว่า 500px) */
+      @media (max-width: 500px) {
+        header .logo img {
+          height: 50px;
+        }
+        
+        /* ปรับ 3D Carousel ให้เล็กสุด (ลดขนาดเหลือ 140px) */
+        /* คำนวณใหม่: translateZ ≈ 210px */
+        .container {
+          width: 140px;
+          height: 100px;
+          margin-top: 100px;
+        }
+        .image {
+          width: 140px;
+          height: 100px;
+        }
+        .image span {
+          font-size: 1.5rem; /* ลดขนาดตัวเลข */
+        }
+
+        .image:nth-child(1) { transform: rotateY(0deg) translateZ(210px); }
+        .image:nth-child(2) { transform: rotateY(40deg) translateZ(210px); }
+        .image:nth-child(3) { transform: rotateY(80deg) translateZ(210px); }
+        .image:nth-child(4) { transform: rotateY(120deg) translateZ(210px); }
+        .image:nth-child(5) { transform: rotateY(160deg) translateZ(210px); }
+        .image:nth-child(6) { transform: rotateY(200deg) translateZ(210px); }
+        .image:nth-child(7) { transform: rotateY(240deg) translateZ(210px); }
+        .image:nth-child(8) { transform: rotateY(280deg) translateZ(210px); }
+        .image:nth-child(9) { transform: rotateY(320deg) translateZ(210px); }
+      }
+
+      /* Animation สำหรับปุ่ม Menu */
+      header.active .menuToggle span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+      header.active .menuToggle span:nth-child(2) {
+        opacity: 0;
+      }
+      header.active .menuToggle span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+
+    </style>
   </head>
   <body>
     <header>
-            <a href="#" class="logo"><img src = 'images/kukiat1.jpg' style="width: 80px;
-              height: 100px;"></a>
-            <div class="menuToggle"></div>
-            <nav>
-              <ul>
-                <li><a href="https://sites.google.com/niyomchai.com/nycretail/%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81">Googlesites</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Dropdown<b></b></a>
-                  <ul>
-                    <li><a href="#">Product 01</a></li>
-                    <li><a href="#">Product 02</a></li>
-                    <li><a href="#">Product 03 <b>+</b></a>
-                      <ul>
-                        <li><a href="#">Submenu 01</a></li>
-                        <li><a href="#">Submenu 02</a></li>
-                        <li><a href="#">Submenu 03</a></li>
-                        <li><a href="#">Submenu 04</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-                <li><a href="#">Portfolio</a></li>
-                <li><a href="#">กิจกรรม<b></b>+</a>
-                  <ul>
-                      <li><a href="https://script.google.com/macros/s/AKfycby7QsLa5IlsMo1QzW_GIM5kWzbpjxxnbKeiO-cSCntTUz_jFrgBvOyfxGWb3RUq2DCTgQ/exec">ระบบลงเวลาทำงาน</a></li>
-                      <li><a href="https://script.google.com/macros/s/AKfycbzlOIJVN_FbGOdZeeV5xJk6h7C17BF6XpTknmP_25LKUI3XbHIxdYG3sVcxSF3exL0/exec">รายงานการลงเวลา</a></li>
-                      <li><a href="https://script.google.com/macros/s/AKfycbydhqOcoPv2nb0qFqIt1JvK-oSqeL14mwKZArmjY75UfKl1bSa0rkSF0K63AvaylOmqnA/exec">ยอดขายเทียบปีเซเว่น</a></li>
-                      <li><a href="https://script.google.com/macros/s/AKfycbzo3rSnI2_t7vWHXsoZyom6jwL2hoPT5bFUU-Ac2AfllAd0g9ppeE808UIE0M36BuDP/exec">ตรวจสอบสถานะลา</a></li>
-                      <li><a href="https://script.google.com/macros/s/AKfycby-uUOh1VcUxFLGB4-Jdrl-XAyaVzy2xYHp8tzxQWDWl1zkGUQulG8oTbkCQBFrKwMteg/exec">Clock</a></li>
-                      <li><a href="https://script.google.com/macros/s/AKfycbxlRmEyoCWIlzonRhvJZT2AmW17GLwPWXZ7gVdjmzAINukiTtJt3mhEGFAU9u6oMfJj0g/exec">Clock2</a></li>
-                      <li><a href="https://script.google.com/macros/s/AKfycbx-6KhB4ynwsR7XhtJ6KetLF1NAvs7PPRA-UYDJTZxyeS7xY3ByVQ01quivD_892Cuamg/exec">My image</a></li>
-                      <li><a href="https://script.google.com/macros/s/AKfycbyikrNWbGt4fUkBTTa5AgYtjeR0udKd_wyhP4BoTxYpMxT_v8zmRjCcwHVrqulza1owRw/exec">Check-in+GPS</a></li>
-                      <li><a href="https://script.google.com/macros/s/AKfycbzwrEkQxxPPDWCbfgidR6uT6ZWqkJYXKSbPnEdHdrVZCtZ-JhwvabIjG8MjHlhxOSx2/exec">Web Page</a></li>
-                      <li><a href="#">Post Link 10</a></li>
-                      <li><a href="#">Post Link 11</a></li>
-                      <li><a href="#">Post Link 12</a></li>
+        <a href="#" class="logo">
+            <img src='images/kukiat1.jpg' alt="Logo">
+        </a>
+        
+        <div class="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <nav>
+            <ul>
+            <li><a href="https://sites.google.com/niyomchai.com/nycretail/%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81">Googlesites</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Dropdown<b></b></a>
+                <ul>
+                <li><a href="#">Product 01</a></li>
+                <li><a href="#">Product 02</a></li>
+                <li><a href="#">Product 03 <b>+</b></a>
+                    <ul>
+                    <li><a href="#">Submenu 01</a></li>
+                    <li><a href="#">Submenu 02</a></li>
                     </ul>
                 </li>
-                <li><a href="#">Contact</a></li>
-              </ul>
-            </nav>
-          </header>
-          <!-- -------------------------------------------------------------------- -->
-        <div class="container">
-            <div class="carousel">
-              <div class="image"><span>1<img src = 'images/kukiat2.jpg'style="width: 150px;height: 150px;"></span></div>
-              <div class="image"><span>2<img src = 'images/kukiat3.jpg'style="width: 150px;height: 150px;"></span></div>
-              <div class="image"><span>3<img src = 'images/IMG_3525.JPG'style="width: 150px;height: 150px;"></span></div>
-              <div class="image"><span>4<img src = 'images/S__54837257.jpg'style="width: 150px;height: 150px;"></span></div>
-              <div class="image"><span>5<img src = 'images/kukiat4.jpg'style="width: 150px;height: 150px;"></span></div>
-              <div class="image"><span>6<img src = 'images/kukiat1.jpg'style="width: 150px;height: 150px;"></span></div>
-              <div class="image"><span>7<img src = 'images/20230823_224431_0000.JPG.png'style="width: 150px; height: 150px;"></span></div>
-              <div class="image"><span>8<img src = 'images/kukiat5.jpg'style="width: 150px; height: 150px;"></span></div>
-              <div class="image"><span>9<img src = 'images/S__63160327_0.jpg'style="width: 150px; height: 150px;"></span></div>
-            </div>
-          </div>
-    <!-------------------------------------------------------------------------------------->
-    
-   
-  
-    
-    <script src="script.js"></script>
+                </ul>
+            </li>
+            <li><a href="#">Portfolio</a></li>
+            <li><a href="#">กิจกรรม<b>+</b></a>
+                <ul>
+                    <li><a href="https://script.google.com/macros/s/AKfycby7QsLa5IlsMo1QzW_GIM5kWzbpjxxnbKeiO-cSCntTUz_jFrgBvOyfxGWb3RUq2DCTgQ/exec">ระบบลงเวลาทำงาน</a></li>
+                    <li><a href="https://script.google.com/macros/s/AKfycbzlOIJVN_FbGOdZeeV5xJk6h7C17BF6XpTknmP_25LKUI3XbHIxdYG3sVcxSF3exL0/exec">รายงานการลงเวลา</a></li>
+                    <li><a href="https://script.google.com/macros/s/AKfycbydhqOcoPv2nb0qFqIt1JvK-oSqeL14mwKZArmjY75UfKl1bSa0rkSF0K63AvaylOmqnA/exec">ยอดขายเทียบปีเซเว่น</a></li>
+                    <li><a href="https://script.google.com/macros/s/AKfycbzo3rSnI2_t7vWHXsoZyom6jwL2hoPT5bFUU-Ac2AfllAd0g9ppeE808UIE0M36BuDP/exec">ตรวจสอบสถานะลา</a></li>
+                    <li><a href="https://script.google.com/macros/s/AKfycby-uUOh1VcUxFLGB4-Jdrl-XAyaVzy2xYHp8tzxQWDWl1zkGUQulG8oTbkCQBFrKwMteg/exec">Clock</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="carousel">
+            <div class="image"><span>1</span><img src='images/kukiat2.jpg' alt="img1"></div>
+            <div class="image"><span>2</span><img src='images/kukiat3.jpg' alt="img2"></div>
+            <div class="image"><span>3</span><img src='images/IMG_3525.JPG' alt="img3"></div>
+            <div class="image"><span>4</span><img src='images/S__54837257.jpg' alt="img4"></div>
+            <div class="image"><span>5</span><img src='images/kukiat4.jpg' alt="img5"></div>
+            <div class="image"><span>6</span><img src='images/kukiat1.jpg' alt="img6"></div>
+            <div class="image"><span>7</span><img src='images/20230823_224431_0000.JPG.png' alt="img7"></div>
+            <div class="image"><span>8</span><img src='images/kukiat5.jpg' alt="img8"></div>
+            <div class="image"><span>9</span><img src='images/S__63160327_0.jpg' alt="img9"></div>
+        </div>
+    </div>
+    <script>
+        let menuToggle = document.querySelector('.menuToggle');
+        let header = document.querySelector('header');
+        
+        menuToggle.onclick = function(){
+            header.classList.toggle('active');
+        }
+    </script>
   </body>
 </html>
