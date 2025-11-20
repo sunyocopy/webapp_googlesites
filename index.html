@@ -115,12 +115,17 @@
 
       /* --- 3. 3D Carousel Logic (หัวใจหลัก) --- */
       .container {
-        position: relative;
-        margin: 150px auto 0; /* เว้นระยะจาก Header */
-        width: 300px; /* ความกว้างมาตรฐานของ Container */
-        height: 200px;
-        perspective: 1000px; /* มุมมอง 3D */
-      }
+  position: absolute;        /* เปลี่ยนจาก relative เป็น absolute */
+  top: 50%;                  /* ดันลงมาที่ 50% ของความสูงจอ */
+  left: 50%;                 /* ดันไปขวาที่ 50% ของความกว้างจอ */
+  transform: translate(-50%, -50%); /* ดึงกลับมาให้อยู่กึ่งกลางเป๊ะๆ */
+  margin: 0;                 /* ลบ margin เดิมออก (สำคัญมาก) */
+  
+  width: 300px;
+  height: 200px;
+  perspective: 1000px;
+  z-index: 1;                /* เพื่อให้แน่ใจว่าอยู่เหนือพื้นหลัง */
+}
 
       .carousel {
         position: absolute;
@@ -192,7 +197,7 @@
 
       /* --- 4. Responsive Design (ปรับตามขนาดหน้าจอ) --- */
 
-      /* TABLET (ต่ำกว่า 900px) */
+      /* ------------TABLET (ต่ำกว่า 900px) -------------------------------------*/
       @media (max-width: 900px) {
         /* Navbar ปรับเป็น Hamburger */
         .menuToggle {
@@ -228,11 +233,12 @@
         
         /* ปรับ 3D Carousel (ลดขนาดเหลือ 220px) */
         /* คำนวณใหม่: translateZ ≈ 320px */
-        .container {
-          width: 220px; 
-          height: 150px;
-          margin-top: 120px;
-        }
+.container {
+  width: 220px; 
+  height: 150px;
+  /* ลบ margin-top: 120px; ออก หรือแก้เป็น 0 */
+  margin: 0; 
+}
         .image {
           width: 220px;
           height: 150px;
@@ -248,7 +254,7 @@
         .image:nth-child(9) { transform: rotateY(320deg) translateZ(320px); }
       }
 
-      /* MOBILE (ต่ำกว่า 500px) */
+      /* -----------------MOBILE (ต่ำกว่า 500px) --------------------*/
       @media (max-width: 500px) {
         header .logo img {
           height: 50px;
@@ -257,10 +263,11 @@
         /* ปรับ 3D Carousel ให้เล็กสุด (ลดขนาดเหลือ 140px) */
         /* คำนวณใหม่: translateZ ≈ 210px */
         .container {
-          width: 140px;
-          height: 100px;
-          margin-top: 100px;
-        }
+  width: 140px;
+  height: 100px;
+  /* ลบ margin-top: 100px; ออก หรือแก้เป็น 0 */
+  margin: 0;
+}
         .image {
           width: 140px;
           height: 100px;
