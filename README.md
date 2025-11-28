@@ -1,2 +1,2 @@
-# webapp สำหรับทำทดลองเขียนcode html css javasceipt
+# webapp สำหรับทำทดลองเขียนcode html css javascript
 # Hi พี่กู้เอง
