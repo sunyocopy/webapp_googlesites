@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="style.css" /> -->
+    <style>
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: black;
+      }
+      .container1 {
+        height: 45%;
+        width: 45%;
+        display: grid;
+        grid-template-rows: 35% 65%;
+        align-items: center;
+        justify-content: center;
+        border: 0.3rem solid #1a1a1a;
+        border-radius: 3rem;
+        background-color: #1a1a1a;
+        -webkit-box-reflect: below 0px
+          linear-gradient(transparent, transparent 10%, rgba(0, 0, 0, 0.1)); /* การสะท้อนด้านล่าง */
+      }
+
+      h1 {
+        margin-top: 3rem;
+        font-size: 3.5rem;
+        text-align: center;
+        padding: 0 1rem;
+        border-bottom: 4px solid #0d0d0d;
+        background: linear-gradient(90deg, #00dbde, #fc00ff);
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+      .box {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .clock::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 90%;
+        height: 8rem;
+        background: linear-gradient(
+          0deg,
+          transparent,
+          transparent,
+          #b91fdc,
+          #b91fdc,
+          #b91fdc
+        );
+        z-index: 0;
+        transform-origin: bottom right;
+        animation-delay: -3s;
+      }
+      @keyframes animate {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      .front-clock {
+        text-align: center;
+        padding-top: 0.6rem;
+        background-color: #0d0d0d;
+        width: 95%;
+        height: 95%;
+        border-radius: 1rem;
+        z-index: 1;
+      }
+      .clock {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0 0.5rem;
+        width: 70%;
+        height: 8rem;
+        align-items: center;
+        color: #fff;
+        background-color: #1a1a1a;
+        position: relative;
+        border-radius: 1rem;
+        font-size: 4rem;
+        overflow: hidden;
+      }
+      .clock p {
+        font-size: 1rem;
+        color: #fff;
+      }
+      .clock::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 90%;
+        height: 8rem;
+        background: linear-gradient(
+          0deg,
+          transparent,
+          transparent,
+          #2370f5,
+          #2370f5,
+          #2370f5
+        );
+        z-index: 1;
+        transform-origin: bottom right;
+        animation: animate 5s linear infinite;
+      }
+      @media (max-width: 890px) {
+        .container {
+          width: 60%;
+        }
+        .clock {
+          font-size: 3rem;
+        }
+      }
+      @media (max-width: 590px) {
+        .container {
+          grid-template-rows: 20% 80%;
+          height: 80%;
+          width: 70%;
+        }
+        h1 {
+          margin-top: 0;
+        }
+        .box {
+          display: grid;
+          grid-template-rows: 33% 33% 33%;
+          height: 98%;
+          align-items: stretch;
+        }
+        .clock {
+          width: 30vw;
+          margin: 0;
+          font-size: 4rem;
+          margin-top: 0.8rem;
+        }
+      }
+      @media (max-width: 390px) {
+        .container {
+          height: 80%;
+          width: 90%;
+        }
+        .clock {
+          width: 38vw;
+        }
+      }
+      @media (max-height: 500px) {
+        .container {
+          height: 85%;
+          width: 60%;
+        }
+        .clock {
+          font-size: 3rem;
+          height: 65%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container1">
+      <h1 class="day" id="day">day</h1>
+      <div class="box">
+        <div class="clock">
+          <div class="front-clock">
+            <div id="hour">00</div>
+            <p>นาฬิกา</p>
+          </div>
+          <!--end front-clock-->
+        </div>
+        <!--end clock-->
+
+        <div class="clock">
+          <div class="front-clock">
+            <div id="minute">00</div>
+            <p>นาที</p>
+          </div>
+          <!--end front-clock-->
+        </div>
+        <!--end clock-->
+        <div class="clock">
+          <div class="front-clock">
+            <div id="second">00</div>
+            <p>วินาที</p>
+          </div>
+          <!--end front-clock-->
+        </div>
+        <!--end clock-->
+      </div>
+      <!--end box-->
+    </main>
+    <!-- <h1 id="p1"></h1> -->
+    <p id="a" style="color: white"></p>
+    <script>
+      const hour = document.getElementById("hour");
+      const minute = document.getElementById("minute");
+      const second = document.getElementById("second");
+      const day = document.getElementById("day");
+
+      var monthName = [
+        "มกราคม",
+        "กุมภาพันธ์",
+        "Mar",
+        "Apr",
+        "พฤษภาคม",
+        "Jun",
+        "Jul",
+        "Agu",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+
+      const clock = setInterval(function time() {
+        let today = new Date();
+        let d = today.getDate();
+        let m = today.getMonth();
+        let y = today.getFullYear();
+        let h = today.getHours();
+        let min = today.getMinutes();
+        let sec = today.getSeconds();
+
+        h = h < 10 ? `0${h}` : h;
+        min = min < 10 ? `0${min}` : min;
+        sec = sec < 10 ? `0${sec}` : sec;
+
+        day.innerHTML = `วันที่   ${d} ${monthName[m]} ${y}`;
+        hour.textContent = h;
+        minute.innerText = min;
+        second.innerText = sec;
+      });
+    </script>
+    <!-- <script src="script.js"></script> -->
+  </body>
+</html>
