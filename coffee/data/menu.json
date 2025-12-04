@@ -1,0 +1,306 @@
+{
+  "coffee": [
+    {
+      "id": 1,
+      "name": "เอสเพรสโซ่",
+      "description": "กาแฟเข้มข้นแบบดั้งเดิม",
+      "price": 45,
+      "category": "coffee",
+      "image": "images/photo-1510707577719-ae7c14805e3a.jpeg",
+      "options": {
+        "size": ["S", "M", "L"],
+        "sweetness": ["ไม่หวาน", "หวานน้อย", "หวานปกติ", "หวานมาก"],
+        "intensity": ["เข้มน้อย", "เข้มปกติ", "เข้มมาก"]
+      }
+    },
+    {
+      "id": 2,
+      "name": "อเมริกาโน่",
+      "description": "เอสเพรสโซ่ผสมน้ำร้อน",
+      "price": 50,
+      "category": "coffee",
+      "image": "images/photo-1497935586351-b67a49e012bf.jpeg",
+      "options": {
+        "size": ["S", "M", "L"],
+        "sweetness": ["ไม่หวาน", "หวานน้อย", "หวานปกติ", "หวานมาก"],
+        "hot": ["ร้อน", "เย็น"]
+      }
+    },
+    {
+      "id": 3,
+      "name": "คาปูชิโน่",
+      "description": "เอสเพรสโซ่กับนมร้อนและโฟมนม",
+      "price": 65,
+      "category": "coffee",
+      "image": "images/photo-1572442388796-11668a67e53d.jpeg",
+      "options": {
+        "size": ["S", "M", "L"],
+        "sweetness": ["ไม่หวาน", "หวานน้อย", "หวานปกติ", "หวานมาก"],
+        "milk": ["นมจืด", "นมอัลมอนด์", "นมโอ๊ต"]
+      }
+    },
+    {
+      "id": 4,
+      "name": "ลาเต้",
+      "description": "เอสเพรสโซ่กับนมร้อนและโฟมนมบาง",
+      "price": 70,
+      "category": "coffee",
+      "image": "images/photo-1561047029-3000c68339ca.jpeg",
+      "options": {
+        "size": ["S", "M", "L"],
+        "sweetness": ["ไม่หวาน", "หวานน้อย", "หวานปกติ", "หวานมาก"],
+        "milk": ["นมจืด", "นมอัลมอนด์", "นมโอ๊ต"],
+        "hot": ["ร้อน", "เย็น"]
+      }
+    },
+    {
+      "id": 5,
+      "name": "มอคค่า",
+      "description": "เอสเพรสโซ่กับช็อกโกแลตและนม",
+      "price": 75,
+      "category": "coffee",
+      "image": "images/photo-1534778101976-62847782c213.jpeg",
+      "options": {
+        "size": ["S", "M", "L"],
+        "sweetness": ["ไม่หวาน", "หวานน้อย", "หวานปกติ", "หวานมาก"],
+        "hot": ["ร้อน", "เย็น"]
+      }
+    },
+    {
+      "id": 6,
+      "name": "แมคคิอาโต้",
+      "description": "เอสเพรสโซ่กับนมโฟมและคาราเมล",
+      "price": 80,
+      "category": "coffee",
+      "image": "images/photo-1485808191679-5f86510681a2.jpeg",
+      "options": {
+        "size": ["S", "M", "L"],
+        "sweetness": ["ไม่หวาน", "หวานน้อย", "หวานปกติ", "หวานมาก"],
+        "hot": ["ร้อน", "เย็น"]
+      }
+    },
+    {
+      "id": 21,
+      "name": "ฟราปเป้",
+      "description": "กาแฟปั่นเย็นหวานนุ่ม",
+      "price": 85,
+      "category": "coffee",
+      "image": "images/photo-1461023058943-07fcbe16d735.jpeg",
+      "options": {
+        "size": ["S", "M", "L"],
+        "sweetness": ["ไม่หวาน", "หวานน้อย", "หวานปกติ", "หวานมาก"],
+        "topping": ["ไม่ใส่", "วิปครีม", "ช็อกโกแลตชิป"]
+      }
+    },
+    {
+      "id": 22,
+      "name": "เอสเพรสโซ่โรมาโน่",
+      "description": "เอสเพรสโซ่กับเปลือกเลมอน",
+      "price": 55,
+      "category": "coffee",
+      "image": "images/photo-1542181961-9590d0c79dab.jpeg",
+      "options": {
+        "size": ["S", "M"],
+        "intensity": ["เข้มน้อย", "เข้มปกติ", "เข้มมาก"]
+      }
+    }
+  ],
+  "tea": [
+    {
+      "id": 7,
+      "name": "ชาไทย",
+      "description": "ชาไทยแท้รสชาติเข้มข้น",
+      "price": 40,
+      "category": "tea",
+      "image": "images/photo-1576092768241-dec231879fc3.jpeg",
+      "options": {
+        "size": ["S", "M", "L"],
+        "sweetness": ["ไม่หวาน", "หวานน้อย", "หวานปกติ", "หวานมาก"],
+        "hot": ["ร้อน", "เย็น"]
+      }
+    },
+    {
+      "id": 8,
+      "name": "ชาเขียว",
+      "description": "ชาเขียวจากญี่ปุ่น รสชาติหอมละมุน",
+      "price": 45,
+      "category": "tea",
+      "image": "images/photo-1544787219-7f47ccb76574.jpeg",
+      "options": {
+        "size": ["S", "M", "L"],
+        "sweetness": ["ไม่หวาน", "หวานน้อย", "หวานปกติ", "หวานมาก"],
+        "hot": ["ร้อน", "เย็น"]
+      }
+    },
+    {
+      "id": 9,
+      "name": "ชานมไข่มุก",
+      "description": "ชานมไต้หวันกับไข่มุกเหนียวนุ่ม",
+      "price": 55,
+      "category": "tea",
+      "image": "images/photo-1525385133512-2f3bdd039054.jpeg",
+      "options": {
+        "size": ["S", "M", "L"],
+        "sweetness": ["ไม่หวาน", "หวานน้อย", "หวานปกติ", "หวานมาก"],
+        "pearls": ["ไข่มุกดำ", "ไข่มุกใส", "ไม่ใส่ไข่มุก"]
+      }
+    },
+    {
+      "id": 10,
+      "name": "ชาอู่หลง",
+      "description": "ชาอู่หลงพรีเมียม รสชาติเข้มข้น",
+      "price": 50,
+      "category": "tea",
+      "image": "images/photo-1558618666-fcd25c85cd64.jpeg",
+      "options": {
+        "size": ["S", "M", "L"],
+        "sweetness": ["ไม่หวาน", "หวานน้อย", "หวานปกติ", "หวานมาก"],
+        "hot": ["ร้อน", "เย็น"]
+      }
+    }
+  ],
+  "smoothie": [
+    {
+      "id": 11,
+      "name": "สมูทตี้มะม่วง",
+      "description": "มะม่วงสดผสมนมและน้ำแข็ง",
+      "price": 60,
+      "category": "smoothie",
+      "image": "images/photo-1553530666-ba11a7da3888.jpeg",
+      "options": {
+        "size": ["S", "M", "L"],
+        "sweetness": ["ไม่หวาน", "หวานน้อย", "หวานปกติ", "หวานมาก"]
+      }
+    },
+    {
+      "id": 12,
+      "name": "สมูทตี้สตรอเบอร์รี่",
+      "description": "สตรอเบอร์รี่สดผสมโยเกิร์ต",
+      "price": 65,
+      "category": "smoothie",
+      "image": "images/photo-1610970881699-44a5587cabec.jpeg",
+      "options": {
+        "size": ["S", "M", "L"],
+        "sweetness": ["ไม่หวาน", "หวานน้อย", "หวานปกติ", "หวานมาก"]
+      }
+    },
+    {
+      "id": 13,
+      "name": "สมูทตี้กล้วยหอม",
+      "description": "กล้วยหอมสดผสมนมและน้ำผึ้ง",
+      "price": 55,
+      "category": "smoothie",
+      "image": "images/photo-1505252585461-04db1eb84625.jpeg",
+      "options": {
+        "size": ["S", "M", "L"],
+        "sweetness": ["ไม่หวาน", "หวานน้อย", "หวานปกติ", "หวานมาก"]
+      }
+    },
+    {
+      "id": 14,
+      "name": "สมูทตี้อโวคาโด",
+      "description": "อโวคาโดสดผสมนมและน้ำผึ้ง",
+      "price": 70,
+      "category": "smoothie",
+      "image": "images/photo-1623065422902-30a2d299bbe4.jpeg",
+      "options": {
+        "size": ["S", "M", "L"],
+        "sweetness": ["ไม่หวาน", "หวานน้อย", "หวานปกติ", "หวานมาก"]
+      }
+    }
+  ],
+  "dessert": [
+    {
+      "id": 15,
+      "name": "ชีสเค้ก",
+      "description": "ชีสเค้กนิวยอร์กสไตล์",
+      "price": 85,
+      "category": "dessert",
+      "image": "images/photo-1524351199678-941a58a3df50.jpeg",
+      "options": {
+        "topping": ["ไม่ใส่", "สตรอเบอร์รี่", "บลูเบอร์รี่", "ช็อกโกแลต"]
+      }
+    },
+    {
+      "id": 16,
+      "name": "บราวนี่",
+      "description": "บราวนี่ช็อกโกแลตเข้มข้น",
+      "price": 75,
+      "category": "dessert",
+      "image": "images/photo-1606313564200-e75d5e30476c.jpeg",
+      "options": {
+        "serving": ["ร้อน", "เย็น"],
+        "topping": ["ไม่ใส่", "ไอศกรีม", "วิปครีม"]
+      }
+    },
+    {
+      "id": 17,
+      "name": "ทิรามิสุ",
+      "description": "ขนมหวานอิตาลีคลาสสิก",
+      "price": 90,
+      "category": "dessert",
+      "image": "images/photo-1571877227200-a0d98ea607e9.jpeg",
+      "options": {
+        "topping": ["ไม่ใส่", "ผงโกโก้", "ช็อกโกแลตเกล็ด"]
+      }
+    },
+    {
+      "id": 18,
+      "name": "ครัวซองต์",
+      "description": "ครัวซองต์เนยสดอบร้อน",
+      "price": 45,
+      "category": "dessert",
+      "image": "images/photo-1509440159596-0249088772ff.jpeg",
+      "options": {
+        "filling": ["ไม่ใส่", "ช็อกโกแลต", "อัลมอนด์", "แยม"]
+      }
+    },
+    {
+      "id": 19,
+      "name": "มัฟฟิน",
+      "description": "มัฟฟินเนยเสียงใหม่ทุกวัน",
+      "price": 40,
+      "category": "dessert",
+      "image": "images/photo-1486427944299-d1955d23e34d.jpeg",
+      "options": {
+        "flavor": ["บลูเบอร์รี่", "ช็อกโกแลต", "วานิลลา", "ลาเวนเดอร์"]
+      }
+    },
+    {
+      "id": 20,
+      "name": "คุกกี้",
+      "description": "คุกกี้เนยสดหอมกรอบ",
+      "price": 35,
+      "category": "dessert",
+      "image": "images/photo-1499636136210-6f4ee915583e.jpeg",
+      "options": {
+        "flavor": ["ช็อกโกแลตชิป", "อัลมอนด์", "โอ๊ตมีล", "มะพร้าว"],
+        "quantity": ["1 ชิ้น", "3 ชิ้น", "6 ชิ้น"]
+      }
+    },
+    {
+      "id": 23,
+      "name": "โดนัท",
+      "description": "โดนัทหอมนุ่มหลากรสชาติ",
+      "price": 25,
+      "category": "dessert",
+      "image": "images/photo-1551024506-0bccd828d307.jpeg",
+      "options": {
+        "flavor": ["ช็อกโกแลต", "สตรอเบอร์รี่", "ธรรมดา", "ชาเขียว"],
+        "quantity": ["1 ชิ้น", "3 ชิ้น", "6 ชิ้น"]
+      }
+    },
+    {
+      "id": 24,
+      "name": "แพนเค้ก",
+      "description": "แพนเค้กฟูนุ่มสไตล์ญี่ปุ่น",
+      "price": 120,
+      "category": "dessert",
+      "image": "images/photo-1506084868230-bb9d95c24759.jpeg",
+      "options": {
+        "topping": ["เนยและน้ำผึ้ง", "สตรอเบอร์รี่", "บลูเบอร์รี่", "ช็อกโกแลต"],
+        "syrup": ["เมเปิ้ล", "ช็อกโกแลต", "คาราเมล"]
+      }
+    }
+  ]
+}

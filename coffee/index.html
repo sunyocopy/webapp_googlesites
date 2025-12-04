@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coffee House - ร้านกาแฟออนไลน์</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <h2><i class="fas fa-coffee"></i> Coffee House</h2>
+        </div>
+        <ul class="nav-menu">
+          <li><a href="#home">หน้าแรก</a></li>
+          <li><a href="#menu">เมนู</a></li>
+          <li><a href="#about">เกี่ยวกับเรา</a></li>
+          <li><a href="#contact">ติดต่อ</a></li>
+        </ul>
+        <div class="nav-cart">
+          <button class="cart-btn" onclick="toggleCart()">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count">0</span>
+          </button>
+        </div>
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <h1>ยินดีต้อนรับสู่ Coffee House</h1>
+      <p>เครื่องดื่มกาแฟคุณภาพดี สั่งออนไลน์ รับที่ร้าน หรือจัดส่งถึงบ้าน</p>
+      <div class="hero-buttons">
+        <button class="btn btn-primary" onclick="scrollToMenu()">สั่งเลย</button>
+        <button class="btn btn-secondary" onclick="scrollToAbout()">เกี่ยวกับเรา</button>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="images/photo-1447933601403-0c6688de566e.jpeg" alt="Coffee Cup" loading="eager">
+    </div>
+  </section>
+
+  <!-- Order Type Selection -->
+  <section class="order-type">
+    <div class="container">
+      <h2>เลือกประเภทการสั่ง</h2>
+      <div class="order-options">
+        <div class="order-option active" data-type="pickup">
+          <i class="fas fa-store"></i>
+          <h3>รับที่ร้าน</h3>
+          <p>Pickup</p>
+        </div>
+        <div class="order-option" data-type="delivery">
+          <i class="fas fa-motorcycle"></i>
+          <h3>จัดส่ง</h3>
+          <p>Delivery</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu Section -->
+  <section id="menu" class="menu">
+    <div class="container">
+      <h2>เมนูของเรา</h2>
+      <div class="menu-categories">
+        <button class="category-btn active" data-category="all">ทั้งหมด</button>
+        <button class="category-btn" data-category="coffee">กาแฟ</button>
+        <button class="category-btn" data-category="tea">ชา</button>
+        <button class="category-btn" data-category="smoothie">สมูทตี้</button>
+        <button class="category-btn" data-category="dessert">ของหวาน</button>
+      </div>
+      <div class="menu-grid" id="menuGrid">
+        <!-- Menu items will be loaded here -->
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about">
+    <div class="container">
+      <div class="about-content">
+        <div class="about-text">
+          <h2>เกี่ยวกับ Coffee House</h2>
+          <p>เราเป็นร้านกาแฟที่มุ่งมั่นในการนำเสนอเครื่องดื่มกาแฟคุณภาพดีที่สุด ด้วยเมล็ดกาแฟคัดพิเศษจากแหล่งปลูกชั้นดี และบริการที่เป็นมิตร</p>
+          <div class="features">
+            <div class="feature">
+              <i class="fas fa-coffee"></i>
+              <h3>เมล็ดกาแฟคุณภาพ</h3>
+              <p>คัดสรรเมล็ดกาแฟชั้นดีจากเกษตรกรท้องถิ่น</p>
+            </div>
+            <div class="feature">
+              <i class="fas fa-clock"></i>
+              <h3>เสิร์ฟสด ใหม่</h3>
+              <p>ชงสดใหม่ทุกแก้ว รักษาคุณภาพและรสชาติ</p>
+            </div>
+            <div class="feature">
+              <i class="fas fa-heart"></i>
+              <h3>บริการเป็นมิตร</h3>
+              <p>พนักงานมืออาชีพ ใส่ใจในทุกรายละเอียด</p>
+            </div>
+          </div>
+        </div>
+        <div class="about-image">
+          <img src="images/photo-1501339847302-ac426a4a7cbb.jpeg" alt="About Coffee House" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <h2>ติดต่อเรา</h2>
+      <div class="contact-content">
+        <div class="contact-info">
+          <div class="info-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <div>
+              <h3>ที่อยู่</h3>
+              <p>สาขาหลัก: 456 ถนนสีลม แขวงสีลม เขตบางรัก กรุงเทพฯ 10500</p>
+              <p style="font-size: 0.9rem; color: #888;">ใกล้ BTS ศาลาแดง ออกทางออกที่ 2</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-phone"></i>
+            <div>
+              <h3>โทรศัพท์</h3>
+              <p>02-635-4567 | 089-123-4567</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-envelope"></i>
+            <div>
+              <h3>อีเมล</h3>
+              <p>info@coffeehouse.com</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-clock"></i>
+            <div>
+              <h3>เวลาเปิด-ปิด</h3>
+              <p>จันทร์ - อาทิตย์: 07:00 - 22:00</p>
+            </div>
+          </div>
+        </div>
+        <div class="contact-map">
+          <div id="map">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.6395326465376!2d100.53831731538278!3d13.744670690354378!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e2991dc8c90b5d%3A0x7e4b89ccb281e48!2sWat%20Phra%20Kaew!5e0!3m2!1sen!2sth!4v1620000000000!5m2!1sen!2sth" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Shopping Cart Modal -->
+  <div id="cartModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>ตะกร้าสินค้า</h2>
+        <span class="close" onclick="toggleCart()">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div id="cartItems"></div>
+        <div class="cart-summary">
+          <div class="summary-row">
+            <span>ราคารวม:</span>
+            <span id="subtotal">฿0</span>
+          </div>
+          <div class="summary-row" id="deliveryFee" style="display: none;">
+            <span>ค่าจัดส่ง:</span>
+            <span>฿30</span>
+          </div>
+          <div class="summary-row total">
+            <span>รวมทั้งสิ้น:</span>
+            <span id="total">฿0</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="toggleCart()">ช้อปต่อ</button>
+        <button class="btn btn-primary" onclick="proceedToCheckout()">สั่งซื้อ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div id="checkoutModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>ยืนยันคำสั่งซื้อ</h2>
+        <span class="close" onclick="closeCheckout()">&times;</span>
+      </div>
+      <div class="modal-body">
+        <form id="checkoutForm">
+          <div class="form-group">
+            <label for="customerName">ชื่อ-นามสกุล *</label>
+            <input type="text" id="customerName" required>
+          </div>
+          <div class="form-group">
+            <label for="customerPhone">เบอร์โทรศัพท์ *</label>
+            <input type="tel" id="customerPhone" required>
+          </div>
+          <div class="form-group" id="deliveryAddress" style="display: none;">
+            <label for="address">ที่อยู่จัดส่ง *</label>
+            <textarea id="address" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="notes">หมายเหตุ</label>
+            <textarea id="notes" rows="2" placeholder="ความหวาน, เข้มข้น, หมายเหตุพิเศษ"></textarea>
+          </div>
+        </form>
+        <div class="order-summary">
+          <h3>สรุปคำสั่งซื้อ</h3>
+          <div id="checkoutItems"></div>
+          <div class="checkout-total">
+            <strong>รวมทั้งสิ้น: <span id="checkoutTotal">฿0</span></strong>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeCheckout()">ยกเลิก</button>
+        <button class="btn btn-primary" onclick="processPayment()">ดำเนินการชำระเงิน</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment QR Modal -->
+  <div id="paymentModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>ชำระเงินผ่าน QR Code</h2>
+      </div>
+      <div class="modal-body text-center">
+        <div class="qr-code">
+          <div class="qr-placeholder">
+            <i class="fas fa-qrcode"></i>
+            <p>QR Code สำหรับชำระเงิน</p>
+            <p class="amount">จำนวนเงิน: <span id="paymentAmount">฿0</span></p>
+          </div>
+        </div>
+        <p>สแกน QR Code ด้วยแอปธนาคารของคุณ</p>
+        <div class="payment-status">
+          <p>รอการชำระเงิน... <i class="fas fa-spinner fa-spin"></i></p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="cancelPayment()">ยกเลิก</button>
+        <button class="btn btn-success" onclick="confirmPayment()">ยืนยันการชำระเงิน</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3><i class="fas fa-coffee"></i> Coffee House</h3>
+          <p>ร้านกาแฟคุณภาพดี บริการเป็นมิตร</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-line"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h4>เมนู</h4>
+          <ul>
+            <li><a href="#menu">กาแฟ</a></li>
+            <li><a href="#menu">ชา</a></li>
+            <li><a href="#menu">สมูทตี้</a></li>
+            <li><a href="#menu">ของหวาน</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>บริการ</h4>
+          <ul>
+            <li><a href="#">รับที่ร้าน</a></li>
+            <li><a href="#">จัดส่ง</a></li>
+            <li><a href="#">สั่งล่วงหน้า</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>ติดต่อ</h4>
+          <ul>
+            <li><i class="fas fa-phone"></i> 02-123-4567</li>
+            <li><i class="fas fa-envelope"></i> info@coffeehouse.com</li>
+            <li><i class="fas fa-map-marker-alt"></i> กรุงเทพฯ</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Coffee House. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/menu-data.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
