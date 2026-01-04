@@ -5,7 +5,7 @@
   <link rel="icon" type="image/x-icon" href="image/favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
   
-  <title>AI Counter - Auto Aspect Ratio</title>
+  <title>AI Counter - Rebar Only Mode</title>
   
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -13,7 +13,6 @@
   <style>
     body { font-family: "Prompt", sans-serif; }
     #canvas-container { position: relative; width: 100%; border-radius: 0.75rem; overflow: hidden; background-color: #1e293b; }
-    /* อนุญาตให้เลื่อนจอได้ปกติ */
     #canvas-container canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; touch-action: manipulation; }
   </style>
   
@@ -36,9 +35,9 @@
 
     <div class="p-4 space-y-4">
       <div id="total-count-display" class="hidden flex flex-col items-center py-2 bg-indigo-50 rounded-2xl border-2 border-indigo-100">
-        <span class="text-gray-500 text-xs font-medium tracking-widest uppercase">จำนวนเหล็กทั้งหมด</span>
+        <span class="text-gray-500 text-xs font-medium tracking-widest uppercase">จำนวนเหล็กทั้งหมด (rebar)</span>
         <div class="text-6xl font-black text-indigo-700 leading-tight" id="count-number">0</div>
-        <span class="text-indigo-400 text-xs font-bold">REBAR PIECES</span>
+        <span class="text-indigo-400 text-xs font-bold">PIECES DETECTED</span>
       </div>
 
       <div class="flex flex-wrap gap-3 justify-center items-center">
@@ -71,7 +70,6 @@
     const drawingCanvas = document.getElementById("drawing-canvas");
     const drawingCtx = drawingCanvas.getContext("2d");
     
-    // UI Elements
     const statusText = document.getElementById("status-text");
     const statusDiv = document.getElementById("status");
     const statusIcon = document.getElementById("status-icon");
@@ -86,18 +84,18 @@
     let isInSelectionMode = false;
     let isDrawing = false;
 
-    // --- 1. Load Model 640px ---
+    // --- 1. Load Model ---
     async function loadModel() {
       try {
-        session = await ort.InferenceSession.create("./best.onnx"); 
-        statusText.innerText = "READY (Auto-Fit)"; 
+        // เปลี่ยนชื่อไฟล์ตรงนี้ให้ตรงกับไฟล์ ONNX ของคุณ
+        session = await ort.InferenceSession.create("./best_mylabel100.onnx"); 
+        statusText.innerText = "READY (Rebar Only)"; 
         statusDiv.className = "flex items-center gap-1 text-xs bg-green-500 px-3 py-1 rounded-full border border-green-400 text-white";
         statusIcon.innerText = "check_circle"; 
         statusIcon.classList.remove("animate-spin");
       } catch (e) { 
         statusText.innerText = "MODEL ERROR"; 
-        console.error(e);
-        Swal.fire({ icon: 'error', title: 'ไม่พบไฟล์โมเดล', text: 'ตรวจสอบไฟล์ best_ubuntu_979.onnx' });
+        Swal.fire({ icon: 'error', title: 'ไม่พบไฟล์โมเดล', text: 'ตรวจสอบว่าไฟล์ best.onnx อยู่ในโฟลเดอร์เดียวกัน' });
       }
     }
     loadModel();
@@ -125,29 +123,23 @@
       reader.readAsDataURL(file);
     });
 
-    // --- 2. Inference Logic (New: Letterbox Support) ---
+    // --- 2. Inference Logic ---
     async function runInference(image) {
       if (!session) return;
-      
       const size = 640;
-      
-      // 1. คำนวณ Scale เพื่อรักษาสัดส่วน (Letterboxing)
       const scale = Math.min(size / image.width, size / image.height);
       const newWidth = image.width * scale;
       const newHeight = image.height * scale;
       const dx = (size - newWidth) / 2;
       const dy = (size - newHeight) / 2;
 
-      // 2. วาดรูปลง Temp Canvas พร้อมเติมขอบดำ
       const temp = document.createElement("canvas"); 
       temp.width = temp.height = size;
       const tCtx = temp.getContext("2d"); 
-      
-      tCtx.fillStyle = "#808080"; // ใช้สีเทากลางๆ แทนสีดำเพื่อให้เห็นเหล็กชัดขึ้น
+      tCtx.fillStyle = "#808080"; 
       tCtx.fillRect(0, 0, size, size);
-      tCtx.drawImage(image, dx, dy, newWidth, newHeight); // วาดรูปตรงกลาง
+      tCtx.drawImage(image, dx, dy, newWidth, newHeight); 
       
-      // 3. Prepare Tensor
       const imgData = tCtx.getImageData(0, 0, size, size);
       const floatData = new Float32Array(3 * size * size);
       for (let i = 0; i < imgData.data.length; i += 4) { 
@@ -157,8 +149,6 @@
       }
       
       const res = await session.run({ images: new ort.Tensor("float32", floatData, [1, 3, size, size]) });
-      
-      // ส่งค่า Scale ไปด้วย เพื่อคำนวณพิกัดกลับ
       processAndDraw(Object.values(res)[0], image, scale, dx, dy);
     }
 
@@ -177,20 +167,25 @@
       return result;
     }
 
-    // New processAndDraw with Coordinate Mapping
+    // ฟังก์ชันประมวลผล (แก้ไขให้เจาะจง Class 0: rebar)
     function processAndDraw(output, image, scale, dx, dy) {
       let boxes = [];
-      const CONF = 0.45; const IOU = 0.66;  
+      const CONF = 0.45; // ปรับความแม่นยำตรงนี้
+      const IOU = 0.60;  
+      
+      const num_detected = output.dims[2]; 
 
-      for (let i = 0; i < output.dims[2]; i++) {
-        const score = output.data[4 * output.dims[2] + i];
+      for (let i = 0; i < num_detected; i++) {
+        // ดึงคะแนนเฉพาะของ Class 0 (rebar)
+        // ข้อมูลพิกัดใช้ 4 แถวแรก (0,1,2,3) คะแนนคลาสเริ่มแถวที่ 5 (Index 4)
+        const score = output.data[4 * num_detected + i]; 
+
         if (score > CONF) { 
           const x_model = output.data[i];
-          const y_model = output.data[i + output.dims[2]];
-          const w_model = output.data[i + 2 * output.dims[2]];
-          const h_model = output.data[i + 3 * output.dims[2]];
+          const y_model = output.data[i + num_detected];
+          const w_model = output.data[i + 2 * num_detected];
+          const h_model = output.data[i + 3 * num_detected];
           
-          // เก็บค่าเป็น 640 scale ไว้ก่อน
           boxes.push([
             x_model - w_model/2, 
             y_model - h_model/2, 
@@ -202,33 +197,28 @@
       }
       
       let finalBoxes = nms(boxes, IOU);
-      // Sort Top->Bottom, Left->Right
       finalBoxes.sort((a, b) => ((a[1] + a[3]) / 2) - ((b[1] + b[3]) / 2));
       
       ctx.drawImage(image, 0, 0); 
       let count = 0;
       
       finalBoxes.forEach((box) => {
-        // *** คำนวณพิกัดกลับสู่ภาพจริง (Inverse Transform) ***
-        // สูตร: (ค่าจากโมเดล - ขอบดำ) / อัตราส่วนขยาย
         const x1 = (box[0] - dx) / scale;
         const y1 = (box[1] - dy) / scale;
         const x2 = (box[2] - dx) / scale;
         const y2 = (box[3] - dy) / scale;
 
-        // หาจุดกึ่งกลางและรัศมีบนภาพจริง
         const cx = (x1 + x2) / 2;
         const cy = (y1 + y2) / 2;
-        const r = (Math.max(x2 - x1, y2 - y1) / 2) * 0.60;
+        const r = (Math.max(x2 - x1, y2 - y1) / 2) * 0.65;
 
-        // ตรวจสอบว่าจุดอยู่ในภาพจริงหรือไม่ (กันพลาด)
         if (cx >= 0 && cx <= image.width && cy >= 0 && cy <= image.height) {
           if (!drawnPath || drawingCtx.isPointInPath(drawnPath, cx, cy)) {
             count++; 
             ctx.beginPath(); ctx.arc(cx, cy, r, 0, 2 * Math.PI); 
             ctx.strokeStyle = "#22c55e"; ctx.lineWidth = 3; ctx.stroke();
             ctx.fillStyle = "white"; ctx.beginPath(); ctx.arc(cx, cy, r * 0.7, 0, 2 * Math.PI); ctx.fill();
-            ctx.fillStyle = "black"; ctx.font = `bold ${Math.round(r * 0.8)}px Prompt`; 
+            ctx.fillStyle = "black"; ctx.font = `bold ${Math.round(r * 0.9)}px Prompt`; 
             ctx.textAlign = "center"; ctx.textBaseline = "middle"; 
             ctx.fillText(count, cx, cy);
           }
@@ -239,7 +229,7 @@
       countDisplay.classList.remove("hidden");
     }
 
-    // --- 3. Drawing System ---
+    // --- 3. Drawing System (UI Controls) ---
     function getCoords(e) {
       const rect = drawingCanvas.getBoundingClientRect();
       const scaleX = drawingCanvas.width / rect.width;
@@ -262,13 +252,13 @@
       const {x, y} = getCoords(e); drawnPath.lineTo(x, y);
       drawingCtx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
       drawingCtx.strokeStyle = "#ec4899";
-      drawingCtx.lineWidth = Math.max(5, drawingCanvas.width * 0.005);
+      drawingCtx.lineWidth = Math.max(4, drawingCanvas.width * 0.004);
       drawingCtx.lineCap = "round"; drawingCtx.lineJoin = "round"; drawingCtx.stroke(drawnPath);
     }
     function stopDrawing(e) {
       if (isDrawing) {
         isDrawing = false; drawnPath.closePath();
-        drawingCtx.fillStyle = "rgba(236, 72, 153, 0.25)"; drawingCtx.fill(drawnPath); drawingCtx.stroke(drawnPath);
+        drawingCtx.fillStyle = "rgba(236, 72, 153, 0.2)"; drawingCtx.fill(drawnPath); drawingCtx.stroke(drawnPath);
         runInference(currentImage);
       }
     }
@@ -291,7 +281,6 @@
         selectAreaBtn.className = "flex items-center gap-2 px-5 py-2.5 bg-green-600 text-white font-bold rounded-xl shadow-lg transform scale-105 transition-all";
         btnText.innerText = "วาดได้เลย!";
         drawingCanvas.style.touchAction = "none";
-        Swal.fire({ toast: true, position: 'top', icon: 'info', title: 'โหมดวาด: หน้าจอจะล็อคเพื่อให้วาดง่ายขึ้น', showConfirmButton: false, timer: 3000 });
       } else {
         resetButtonUI(); drawingCtx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height); runInference(currentImage);
       }
@@ -304,7 +293,7 @@
       const link = document.createElement("a");
       link.download = `RebarCount-${countNumber.innerText}.png`;
       link.href = canvas.toDataURL(); link.click();
-      Swal.fire({ icon: 'success', title: 'บันทึกสำเร็จ!', text: `จำนวน: ${countNumber.innerText} เส้น`, confirmButtonColor: '#16a34a', timer: 3000 });
+      Swal.fire({ icon: 'success', title: 'บันทึกสำเร็จ!', text: `จำนวนเหล็ก: ${countNumber.innerText} เส้น`, timer: 2000 });
     };
   </script>
 </body>
