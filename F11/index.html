@@ -88,7 +88,7 @@
     async function loadModel() {
       try {
         // เปลี่ยนชื่อไฟล์ตรงนี้ให้ตรงกับไฟล์ ONNX ของคุณ
-        session = await ort.InferenceSession.create("./f11_model_yolo8n_v1.onnx"); 
+        session = await ort.InferenceSession.create("./rebar_yolo11n_v1.onnx"); 
         statusText.innerText = "READY (Rebar Only)"; 
         statusDiv.className = "flex items-center gap-1 text-xs bg-green-500 px-3 py-1 rounded-full border border-green-400 text-white";
         statusIcon.innerText = "check_circle"; 
